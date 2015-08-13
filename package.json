@@ -1,8 +1,8 @@
 {
-  "name": "relay-starter-kit",
-  "private": true,
-  "description": "A quick way to get up and running with Relay",
-  "repository": "facebook/relay-starter-kit",
+  "name": "simple-relay-app",
+  "private": false,
+  "description": "A simple contact organizer app built with Relay",
+  "repository": "maringerov/simple-relay-app",
   "version": "0.1.0",
   "scripts": {
     "start": "babel-node ./server.js",
