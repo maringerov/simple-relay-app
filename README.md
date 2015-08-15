@@ -1,6 +1,6 @@
-# A Very Simple Relay App
+# A contact organizer application built on top of Relay.
 
-My first time playing around with the new Relay framework.
+My first time playing around with the new Relay framework. WIP.
 
 To run the app:
 
