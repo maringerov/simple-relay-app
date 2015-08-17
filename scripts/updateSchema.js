@@ -3,7 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 import { Schema } from '../data/schema';
-import { graphql }  from 'graphql';
+import { graphql } from 'graphql';
 import { introspectionQuery } from 'graphql/utilities';
 
 async () => {

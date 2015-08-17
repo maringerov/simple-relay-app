@@ -1,17 +1,5 @@
-/**
- *  Copyright (c) 2015, Facebook, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant
- *  of patent rights can be found in the PATENTS file in the same directory.
- */
-
 import {
-  GraphQLBoolean,
-  GraphQLID,
   GraphQLInt,
-  GraphQLList,
   GraphQLNonNull,
   GraphQLObjectType,
   GraphQLSchema,
@@ -27,11 +15,9 @@ import {
   globalIdField,
   mutationWithClientMutationId,
   nodeDefinitions,
-  toGlobalId,
 } from 'graphql-relay';
 
 import {
-  // Import methods that your schema can use to interact with your database
   User,
   Contact,
   addContact,
@@ -39,15 +25,8 @@ import {
   getContacts,
   getUser,
   getViewer,
-  updateContact,
 } from './database';
 
-/**
- * We get the node interface and field from the Relay library.
- *
- * The first method defines the way we resolve an ID to its object.
- * The second defines the way we resolve an object to its GraphQL type.
- */
 var {nodeInterface, nodeField} = nodeDefinitions(
   (globalId) => {
     var {type, id} = fromGlobalId(globalId);
@@ -69,10 +48,6 @@ var {nodeInterface, nodeField} = nodeDefinitions(
     }
   }
 );
-
-/**
- * Define your own types here
- */
 
 var GraphQLUser = new GraphQLObjectType({
   name: 'User',
@@ -97,26 +72,27 @@ var GraphQLContact = new GraphQLObjectType({
     name: {
       type: GraphQLString,
       description: 'The name of the contact',
+      resolve: (obj) => obj.name,
     },
     email: {
       type: GraphQLString,
       description: 'The email of the contact',
+      resolve: (obj) => obj.email,
     },
     phone: {
       type: GraphQLString,
       description: 'The phone number of the contact',
+      resolve: (obj) => obj.phone,
     },
     notes: {
       type: GraphQLString,
       description: 'A reminder how you know this contact',
+      resolve: (obj) => obj.notes,
     },
   },
   interfaces: [nodeInterface],
 });
 
-/**
- * Define your own connection types here
- */
 var {
   connectionType: ContactsConnection,
   edgeType: GraphQLContactEdge,
@@ -131,10 +107,6 @@ var {
   })
 });
 
-/**
- * This is the type that will be the root of our query,
- * and the entry point into our schema.
- */
 var Root = new GraphQLObjectType({
   name: 'Root',
   fields: {
@@ -146,17 +118,13 @@ var Root = new GraphQLObjectType({
   },
 });
 
-/**
- * This is the type that will be the root of our mutations,
- * and the entry point into performing writes in our schema.
- */
 var GraphQLAddContactMutation = mutationWithClientMutationId({
   name: 'AddContact',
   inputFields: {
-    name: { name: new GraphQLNonNull(GraphQLString) },
-    email: { email: new GraphQLNonNull(GraphQLString) },
-    phone: { phone: new GraphQLNonNull(GraphQLString) },
-    notes: { notes: new GraphQLNonNull(GraphQLString) },
+    name: { type: new GraphQLNonNull(GraphQLString) },
+    email: { type: new GraphQLNonNull(GraphQLString) },
+    phone: { type: new GraphQLNonNull(GraphQLString) },
+    notes: { type: new GraphQLNonNull(GraphQLString) },
   },
   outputFields: {
     contactEdge: {
@@ -180,11 +148,14 @@ var GraphQLAddContactMutation = mutationWithClientMutationId({
   }
 });
 
-/**
- * Finally, we construct our schema (whose starting query type is the query
- * type we defined above) and export it.
- */
+var Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addContact: GraphQLAddContactMutation,
+  },
+});
+
 export var Schema = new GraphQLSchema({
-  query: queryType,
-  mutation: mutationType
+  query: Root,
+  mutation: Mutation
 });

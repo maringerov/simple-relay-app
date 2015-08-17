@@ -24,7 +24,7 @@ var contact1 = {
   name: 'James Bond',
   email: 'james.bond@mi5.co.uk',
   phone: '+1 555 666 333',
-  notes: 'Britain\s top secretagent'
+  notes: 'Britain\'s top secret agent'
 };
 var contact2 = {
   name: 'Jason Bourne',
@@ -36,7 +36,7 @@ var contact3 = {
   name: 'Ethan Hunt',
   email: 'ethanhunt@agent.co',
   phone: '+1 000 111 222',
-  notes: 'Like to hang from buildings'
+  notes: 'Likes to hang from buildings'
 };
 addContact(contact1);
 addContact(contact2);
@@ -68,12 +68,4 @@ export function getUser(id) {
 
 export function getViewer() {
   return getUser(VIEWER_ID);
-}
-
-export function updateContact(id, name, email, phone, notes) {
-  var contact = getContact(id);
-  contact.name = name;
-  contact.email = email;
-  contact.phone = phone;
-  contact.notes = notes;
 }
