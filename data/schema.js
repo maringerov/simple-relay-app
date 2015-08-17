@@ -49,21 +49,6 @@ var {nodeInterface, nodeField} = nodeDefinitions(
   }
 );
 
-var GraphQLUser = new GraphQLObjectType({
-  name: 'User',
-  description: 'A person who uses our app',
-  fields: {
-    id: globalIdField('User'),
-    contacts: {
-      type: ContactsConnection,
-      description: 'A person\'s collection of contacts',
-      args: connectionArgs,
-      resolve: (obj, args) => connectionFromArray(getContacts(), args),
-    },
-  },
-  interfaces: [nodeInterface],
-});
-
 var GraphQLContact = new GraphQLObjectType({
   name: 'Contact',
   description: 'A contact',
@@ -105,6 +90,21 @@ var {
       resolve: (conn) => conn.edges.length,
     },
   })
+});
+
+var GraphQLUser = new GraphQLObjectType({
+  name: 'User',
+  description: 'A person who uses our app',
+  fields: {
+    id: globalIdField('User'),
+    contacts: {
+      type: ContactsConnection,
+      description: 'A person\'s collection of contacts',
+      args: connectionArgs,
+      resolve: (obj, args) => connectionFromArray(getContacts(), args),
+    },
+  },
+  interfaces: [nodeInterface],
 });
 
 var Root = new GraphQLObjectType({
