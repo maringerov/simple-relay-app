@@ -31,6 +31,11 @@ var compiler = webpack({
       {
         test: /\.js$/,
         loader: 'eslint'
+      },
+      {
+        test: /\.less$/,
+        loader: 'style!css?modules&importLoaders=1' +
+          '&localIdentName=[name]__[local]___[hash:base64:5]!less'
       }
     ]
   },
