@@ -19,7 +19,10 @@ class App extends React.Component {
       <h1>Contact Organizer</h1>
       <p>Total contacts: {this.props.viewer.contacts.totalCount}</p>
       <AddContact onSave={this._handleAddContactSave}/>
-      <ContactDetails />
+      <ContactDetails
+        contacts={this.props.viewer.contacts}
+        viewer={this.props.viewer}
+      />
     </div>;
   }
 }
