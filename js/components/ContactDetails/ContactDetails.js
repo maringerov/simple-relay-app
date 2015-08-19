@@ -14,7 +14,7 @@ class ContactDetails extends React.Component {
   render() {
     return (
       <div className={styles.main}>
-        Contact Details
+        Contact Details ({this.props.contacts.totalCount})
         {this.renderContacts()}
       </div>
     );
@@ -32,11 +32,6 @@ export default Relay.createContainer(ContactDetails, {
           },
         },
         totalCount,
-      }
-    `,
-    viewer: () => Relay.QL`
-      fragment on User {
-        ${Contact.getFragment('viewer')}
       }
     `,
   },

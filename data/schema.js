@@ -59,21 +59,6 @@ var GraphQLContact = new GraphQLObjectType({
       description: 'The name of the contact',
       resolve: (obj) => obj.name,
     },
-    email: {
-      type: GraphQLString,
-      description: 'The email of the contact',
-      resolve: (obj) => obj.email,
-    },
-    phone: {
-      type: GraphQLString,
-      description: 'The phone number of the contact',
-      resolve: (obj) => obj.phone,
-    },
-    notes: {
-      type: GraphQLString,
-      description: 'A reminder how you know this contact',
-      resolve: (obj) => obj.notes,
-    },
   },
   interfaces: [nodeInterface],
 });
@@ -122,9 +107,6 @@ var GraphQLAddContactMutation = mutationWithClientMutationId({
   name: 'AddContact',
   inputFields: {
     name: { type: new GraphQLNonNull(GraphQLString) },
-    email: { type: new GraphQLNonNull(GraphQLString) },
-    phone: { type: new GraphQLNonNull(GraphQLString) },
-    notes: { type: new GraphQLNonNull(GraphQLString) },
   },
   outputFields: {
     contactEdge: {
@@ -142,8 +124,8 @@ var GraphQLAddContactMutation = mutationWithClientMutationId({
       resolve: () => getViewer(),
     },
   },
-  mutateAndGetPayload: ({name, email, phone, notes}) => {
-    var localContactId = addContact(name, email, phone, notes);
+  mutateAndGetPayload: ({name}) => {
+    var localContactId = addContact(name);
     return {localContactId};
   }
 });
