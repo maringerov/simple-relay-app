@@ -15,6 +15,7 @@ class ContactDetails extends React.Component {
     return (
       <div className={styles.main}>
         Contact Details ({this.props.contacts.totalCount})
+        <br/>***
         {this.renderContacts()}
       </div>
     );

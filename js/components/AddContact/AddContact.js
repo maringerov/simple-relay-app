@@ -9,7 +9,7 @@ export default class AddContact extends React.Component {
   state = {
     name: ''
   }
-  _handleNameChange = (e) => {
+  _handleChange = (e) => {
     this.setState({
       name: e.target.value
     });
@@ -30,7 +30,7 @@ export default class AddContact extends React.Component {
           <input
             type='text'
             placeholder='The name'
-            onChange={this._handleNameChange}
+            onChange={this._handleChange}
             value={this.state.name}
             ref='name'
           />
