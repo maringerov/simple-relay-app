@@ -14,16 +14,10 @@ class App extends React.Component {
       })
     );
   }
-  renderContactNames() {
-    return this.props.viewer.contacts.edges.map(edge =>
-      <li key={edge.node.id}>{edge.node.name}</li>
-    );
-  }
   render() {
     return <div>
       <h1>Contact Organizer</h1>
       <p>Total contacts: {this.props.viewer.contacts.totalCount}</p>
-      <ul>{this.renderContactNames()}</ul>
       <AddContact onSave={this._handleAddContactSave}/>
       <ContactDetails
         contacts={this.props.viewer.contacts}
@@ -41,7 +35,6 @@ export default Relay.createContainer(App, {
           edges {
             node {
               id,
-              name,
             },
           },
           totalCount,
