@@ -12,6 +12,11 @@ export default class AddContactMutation extends Relay.Mutation {
   getMutation() {
     return Relay.QL`mutation{addContact}`;
   }
+  getVariables() {
+    return {
+      name: this.props.name
+    };
+  }
   getFatQuery() {
     return Relay.QL`
       fragment on AddContactPayload {
@@ -31,15 +36,10 @@ export default class AddContactMutation extends Relay.Mutation {
       parentID: this.props.viewer.id,
       connectionName: 'contacts',
       edgeName: 'contactEdge',
-      rangeBehaviours: {
+      rangeBehaviors: {
         '': 'append',
       },
     }];
-  }
-  getVariables() {
-    return {
-      name: this.props.name
-    };
   }
   getOptimisticResponse() {
     return {
