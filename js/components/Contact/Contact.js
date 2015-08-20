@@ -5,10 +5,10 @@ class Contact extends React.Component {
     contact: PropTypes.object.isRequired
   }
   render() {
-    const { name } = this.props.contact;
+    const { name, email, phone, notes } = this.props.contact;
     return (
       <div>
-        Name: {name}
+        {name} | {email} | {phone} | {notes}
       </div>
     );
   }
@@ -20,6 +20,9 @@ export default Relay.createContainer(Contact, {
       fragment on Contact {
         id,
         name,
+        email,
+        phone,
+        notes,
       }
     `,
   },

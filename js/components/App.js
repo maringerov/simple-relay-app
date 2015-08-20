@@ -3,10 +3,13 @@ import AddContact from './AddContact/AddContact';
 import ContactDetails from './ContactDetails/ContactDetails';
 
 class App extends React.Component {
-  _handleAddContactSave = (name) => {
+  _handleAddContactSave = (name, email, phone, notes) => {
     Relay.Store.update(
       new AddContactMutation({
         name,
+        email,
+        phone,
+        notes,
         viewer: this.props.viewer
       })
     );

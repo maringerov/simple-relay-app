@@ -7,19 +7,43 @@ export default class AddContact extends React.Component {
     onSave: PropTypes.func.isRequired
   }
   state = {
-    name: ''
+    name: '',
+    email: '',
+    phone: '',
+    notes: ''
   }
-  _handleChange = (e) => {
+  _handleNameChange = (e) => {
     this.setState({
       name: e.target.value
+    });
+  }
+  _handleEmailChange = (e) => {
+    this.setState({
+      email: e.target.value
+    });
+  }
+  _handlePhoneChange = (e) => {
+    this.setState({
+      phone: e.target.value
+    });
+  }
+  _handleNotesChange = (e) => {
+    this.setState({
+      notes: e.target.value
     });
   }
   _handleSubmit = (e) => {
     e.preventDefault();
     const newName = this.state.name;
-    this.props.onSave(newName);
+    const newEmail = this.state.email;
+    const newPhone = this.state.phone;
+    const newNotes = this.state.notes;
+    this.props.onSave(newName, newEmail, newPhone, newNotes);
     this.setState({
-      name: ''
+      name: '',
+      email: '',
+      phone: '',
+      notes: ''
     });
   }
   render() {
@@ -30,9 +54,33 @@ export default class AddContact extends React.Component {
           <input
             type='text'
             placeholder='The name'
-            onChange={this._handleChange}
+            onChange={this._handleNameChange}
             value={this.state.name}
             ref='name'
+          />
+          <br />
+            <input
+            type='email'
+            placeholder='The email'
+            onChange={this._handleEmailChange}
+            value={this.state.email}
+            ref='email'
+          />
+          <br />
+          <input
+            type='text'
+            placeholder='The phone number'
+            onChange={this._handlePhoneChange}
+            value={this.state.phone}
+            ref='phone'
+          />
+          <br />
+          <input
+            type='text'
+            placeholder='The notes'
+            onChange={this._handleNotesChange}
+            value={this.state.notes}
+            ref='notes'
           />
           <br />
           <input type='submit' value='Add Contact' />

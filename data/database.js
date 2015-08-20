@@ -19,15 +19,12 @@ var contactIdsByUser = {
 };
 var nextContactId = 0;
 
-// Add some secret agents
-addContact('James Bond');
-addContact('Ethan Hunt');
-addContact('Jason Bourne');
-addContact('Marin G');
-
-export function addContact(name) {
+export function addContact(name, email, phone, notes) {
   var contact = new Contact();
   contact.name = name;
+  contact.email = email;
+  contact.phone = phone;
+  contact.notes = notes;
   contact.id = `${nextContactId++}`;
   contactsById[contact.id] = contact;
   contactIdsByUser[VIEWER_ID].push(contact.id);

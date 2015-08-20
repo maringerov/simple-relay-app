@@ -14,7 +14,10 @@ export default class AddContactMutation extends Relay.Mutation {
   }
   getVariables() {
     return {
-      name: this.props.name
+      name: this.props.name,
+      email: this.props.email,
+      phone: this.props.phone,
+      notes: this.props.notes,
     };
   }
   getFatQuery() {
@@ -46,6 +49,9 @@ export default class AddContactMutation extends Relay.Mutation {
       contactEdge: {
         node: {
           name: this.props.name,
+          email: this.props.email,
+          phone: this.props.phone,
+          notes: this.props.notes,
         },
       },
       viewer: {
