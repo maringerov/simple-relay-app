@@ -41,6 +41,7 @@ export default Relay.createContainer(App, {
           ${ContactDetails.getFragment('contacts')},
         },
         ${AddContactMutation.getFragment('viewer')},
+        ${ContactDetails.getFragment('viewer')},
       }
     `,
   },

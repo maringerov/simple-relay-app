@@ -1,7 +1,7 @@
 export default class RemoveContactMutation extends Relay.Mutation {
   static fragments = {
     contact: () => Relay.QL`
-      fradment on Contact {
+      fragment on Contact {
         id,
       }
     `,

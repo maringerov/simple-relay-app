@@ -35,5 +35,10 @@ export default Relay.createContainer(ContactDetails, {
         totalCount,
       }
     `,
+    viewer: () => Relay.QL`
+      fragment on User {
+        ${Contact.getFragment('viewer')}
+      }
+    `,
   },
 });
