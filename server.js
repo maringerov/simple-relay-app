@@ -54,6 +54,6 @@ app.use(
   '/node_modules/react-relay',
   express.static('node_modules/react-relay')
 );
-app.listen(APP_PORT, () => {
+app.listen(process.env.PORT || APP_PORT, () => {
   console.log(`App is now running on http://localhost:${APP_PORT}`);
 });
