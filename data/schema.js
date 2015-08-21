@@ -4,6 +4,7 @@ import {
   GraphQLObjectType,
   GraphQLSchema,
   GraphQLString,
+  GraphQLID,
 } from 'graphql';
 
 import {
@@ -25,11 +26,12 @@ import {
   getContacts,
   getUser,
   getViewer,
+  removeContact,
 } from './database';
 
-var {nodeInterface, nodeField} = nodeDefinitions(
+const {nodeInterface, nodeField} = nodeDefinitions(
   (globalId) => {
-    var {type, id} = fromGlobalId(globalId);
+    let {type, id} = fromGlobalId(globalId);
     if (type === 'User') {
       return getUser(id);
     } else if (type === 'Contact') {
@@ -49,7 +51,7 @@ var {nodeInterface, nodeField} = nodeDefinitions(
   }
 );
 
-var GraphQLContact = new GraphQLObjectType({
+const GraphQLContact = new GraphQLObjectType({
   name: 'Contact',
   description: 'A contact',
   fields: {
@@ -78,7 +80,7 @@ var GraphQLContact = new GraphQLObjectType({
   interfaces: [nodeInterface],
 });
 
-var {
+const {
   connectionType: ContactsConnection,
   edgeType: GraphQLContactEdge,
 } = connectionDefinitions({
@@ -92,7 +94,7 @@ var {
   })
 });
 
-var GraphQLUser = new GraphQLObjectType({
+const GraphQLUser = new GraphQLObjectType({
   name: 'User',
   description: 'A person who uses our app',
   fields: {
@@ -107,7 +109,7 @@ var GraphQLUser = new GraphQLObjectType({
   interfaces: [nodeInterface],
 });
 
-var Root = new GraphQLObjectType({
+const Root = new GraphQLObjectType({
   name: 'Root',
   fields: {
     viewer: {
@@ -118,7 +120,7 @@ var Root = new GraphQLObjectType({
   },
 });
 
-var GraphQLAddContactMutation = mutationWithClientMutationId({
+const GraphQLAddContactMutation = mutationWithClientMutationId({
   name: 'AddContact',
   inputFields: {
     name: { type: new GraphQLNonNull(GraphQLString) },
@@ -130,7 +132,7 @@ var GraphQLAddContactMutation = mutationWithClientMutationId({
     contactEdge: {
       type: GraphQLContactEdge,
       resolve: ({localContactId}) => {
-        var contact = getContact(localContactId);
+        let contact = getContact(localContactId);
         return {
           cursor: cursorForObjectInConnection(getContacts(), contact),
           node: contact,
@@ -143,19 +145,42 @@ var GraphQLAddContactMutation = mutationWithClientMutationId({
     },
   },
   mutateAndGetPayload: ({name, email, phone, notes}) => {
-    var localContactId = addContact(name, email, phone, notes);
+    let localContactId = addContact(name, email, phone, notes);
     return {localContactId};
   }
 });
 
-var Mutation = new GraphQLObjectType({
+const GraphQLRemoveContactMutation = mutationWithClientMutationId({
+  name: 'RemoveContact',
+  inputFields: {
+    id: { type: new GraphQLNonNull(GraphQLID) },
+  },
+  outputFields: {
+    deletedContactId: {
+      type: GraphQLID,
+      resolve: ({id}) => id,
+    },
+    viewer: {
+      type: GraphQLUser,
+      resolve: () => getViewer(),
+    },
+  },
+  mutateAndGetPayload: ({id}) => {
+    let localContactId = fromGlobalId(id).id;
+    removeContact(localContactId);
+    return {id};
+  }
+});
+
+const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
     addContact: GraphQLAddContactMutation,
+    removeContact: GraphQLRemoveContactMutation,
   },
 });
 
-export var Schema = new GraphQLSchema({
+export const Schema = new GraphQLSchema({
   query: Root,
   mutation: Mutation
 });

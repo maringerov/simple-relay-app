@@ -46,3 +46,11 @@ export function getUser(id) {
 export function getViewer() {
   return getUser(VIEWER_ID);
 }
+
+export function removeContact(id) {
+  let contactIndex = contactIdsByUser[VIEWER_ID].indexOf(id);
+  if (contactIndex !== -1) {
+    contactIdsByUser[VIEWER_ID].splice(contactIndex, 1);
+  }
+  delete contactsById[id];
+}
