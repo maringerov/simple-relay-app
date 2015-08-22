@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import RemoveContactMutation from '../../mutations/RemoveContactMutation';
 
 class Contact extends React.Component {
@@ -13,10 +14,13 @@ class Contact extends React.Component {
     );
   }
   render() {
-    const { name, email, phone, notes } = this.props.contact;
+    const { id, name, email, phone, notes } = this.props.contact;
     return (
       <div>
-        {name} | {email} | {phone} | {notes} | More details...
+        {name} | {email} | {phone} | {notes} |
+        <Link to={`/contact/${id}`}>
+          More details...
+        </Link>
         <button onClick={this._handleDelete}>X</button>
       </div>
     );
