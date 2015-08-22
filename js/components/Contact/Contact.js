@@ -2,8 +2,16 @@ import { Link } from 'react-router';
 import RemoveContactMutation from '../../mutations/RemoveContactMutation';
 
 class Contact extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+    this.context = context;
+  }
+  static contextTypes ={
+    router: React.PropTypes.object.isRequired
+  }
   _handleDelete = () => {
     this._removeContact();
+    this.context.router.transitionTo('/');
   }
   _removeContact() {
     Relay.Store.update(
@@ -14,14 +22,14 @@ class Contact extends React.Component {
     );
   }
   render() {
-    const { id, name, email, phone, notes } = this.props.contact;
+    const { name, email, phone, notes } = this.props.contact;
     return (
       <div>
-        {name} | {email} | {phone} | {notes} |
-        <Link to={`/contact/${id}`}>
-          More details...
-        </Link>
-        <button onClick={this._handleDelete}>X</button>
+        <h4><Link to='/'>Back</Link></h4>
+        <div>
+          {name} | {email} | {phone} | {notes}
+          <button onClick={this._handleDelete}>X</button>
+        </div>
       </div>
     );
   }

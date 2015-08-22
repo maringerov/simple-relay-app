@@ -2,7 +2,7 @@ import { Router, Route } from 'react-router';
 import BrowserHistory from 'react-router/lib/BrowserHistory';
 import relayNestedRoutes from 'relay-nested-routes';
 import App from './components/App';
-import More from './components/More/More';
+import Contact from './components/Contact/Contact';
 
 const NestedRootContainer = relayNestedRoutes(React, Relay);
 
@@ -16,15 +16,22 @@ var HomeQueries = {
   `,
 };
 
-// var ContactQueries = {
-//   contact: () => Relay.QL`
-//     query RootQuery {
-//       node(id: $id) {
-//         ${Component.getFragment('contact')},
-//       },
-//     }
-//   `,
-// };
+var ContactQueries = {
+  contact: (Component) => Relay.QL`
+    query RootQuery {
+      node(id: $id) {
+        ${Component.getFragment('contact')},
+      },
+    }
+  `,
+  viewer: (Component) => Relay.QL`
+    query RootQuery {
+      viewer {
+        ${Component.getFragment('viewer')},
+      },
+    }
+  `,
+};
 
 React.render(
   <Router history={new BrowserHistory()}>
@@ -38,7 +45,8 @@ React.render(
       <Route
         name='contact'
         path='/contact/:id'
-        component={More}
+        component={Contact}
+        queries={ContactQueries}
       />
     </Route>
   </Router>,

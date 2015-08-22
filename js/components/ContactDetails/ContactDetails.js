@@ -1,21 +1,24 @@
+import { Link } from 'react-router';
 import styles from './ContactDetails.less';
-import Contact from '../Contact/Contact';
 
 class ContactDetails extends React.Component {
   renderContacts() {
-    return this.props.contacts.edges.map(edge =>
-        <Contact
-          key={edge.node.id}
-          contact={edge.node}
-          viewer={this.props.viewer}
-        />
+    return (
+      <ul>
+        { this.props.contacts.edges.map(edge =>
+          <li key={edge.node.id}>
+            <Link to={`/contact/${edge.node.id}`}>
+              {edge.node.name}
+            </Link>
+          </li>
+        ) }
+      </ul>
     );
   }
   render() {
     return (
       <div className={styles.main}>
-        Contact Details ({this.props.contacts.totalCount})
-        <br/>***
+        <h4>Contact List ({this.props.contacts.totalCount})</h4>
         {this.renderContacts()}
       </div>
     );
@@ -24,20 +27,20 @@ class ContactDetails extends React.Component {
 
 export default Relay.createContainer(ContactDetails, {
   fragments: {
+    viewer: () => Relay.QL`
+      fragment on User {
+        id,
+      }
+    `,
     contacts: () => Relay.QL`
       fragment on ContactConnection {
         edges {
           node {
             id,
-            ${Contact.getFragment('contact')},
+            name,
           },
         },
         totalCount,
-      }
-    `,
-    viewer: () => Relay.QL`
-      fragment on User {
-        ${Contact.getFragment('viewer')}
       }
     `,
   },
