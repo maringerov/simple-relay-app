@@ -49,7 +49,7 @@ export default class AddContact extends React.Component {
   render() {
     return (
       <div className={styles.main}>
-        <h4>Add Contact</h4>
+        <h2>Add Contact</h2>
         <form onSubmit={this._handleSubmit}>
           <input
             type='text'

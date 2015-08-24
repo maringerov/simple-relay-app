@@ -18,7 +18,7 @@ class ContactList extends React.Component {
   render() {
     return (
       <div className={styles.main}>
-        <h4>Contact List ({this.props.contacts.totalCount})</h4>
+        <h2>Contact List ({this.props.contacts.totalCount})</h2>
         {this.renderContacts()}
       </div>
     );
