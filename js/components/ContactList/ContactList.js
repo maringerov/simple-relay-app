@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
-import styles from './ContactDetails.less';
+import styles from './ContactList.less';
 
-class ContactDetails extends React.Component {
+class ContactList extends React.Component {
   renderContacts() {
     return (
       <ul>
@@ -25,7 +25,7 @@ class ContactDetails extends React.Component {
   }
 }
 
-export default Relay.createContainer(ContactDetails, {
+export default Relay.createContainer(ContactList, {
   fragments: {
     viewer: () => Relay.QL`
       fragment on User {

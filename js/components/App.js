@@ -1,6 +1,6 @@
 import AddContactMutation from '../mutations/AddContactMutation';
 import AddContact from './AddContact/AddContact';
-import ContactDetails from './ContactDetails/ContactDetails';
+import ContactList from './ContactList/ContactList';
 
 class App extends React.Component {
   _handleAddContactSave = (name, email, phone, notes) => {
@@ -19,7 +19,7 @@ class App extends React.Component {
       <h1>Contact Organizer</h1>
       <p>Total contacts: {this.props.viewer.contacts.totalCount}</p>
       <AddContact onSave={this._handleAddContactSave}/>
-      <ContactDetails
+      <ContactList
         contacts={this.props.viewer.contacts}
         viewer={this.props.viewer}
       />
@@ -38,10 +38,10 @@ export default Relay.createContainer(App, {
             },
           },
           totalCount,
-          ${ContactDetails.getFragment('contacts')},
+          ${ContactList.getFragment('contacts')},
         },
         ${AddContactMutation.getFragment('viewer')},
-        ${ContactDetails.getFragment('viewer')},
+        ${ContactList.getFragment('viewer')},
       }
     `,
   },
