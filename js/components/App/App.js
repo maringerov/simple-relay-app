@@ -1,6 +1,7 @@
-import AddContactMutation from '../mutations/AddContactMutation';
-import AddContact from './AddContact/AddContact';
-import ContactList from './ContactList/ContactList';
+import styles from './App.less';
+import AddContactMutation from '../../mutations/AddContactMutation';
+import AddContact from '../AddContact/AddContact';
+import ContactList from '../ContactList/ContactList';
 
 class App extends React.Component {
   _handleAddContactSave = (name, email, phone, notes) => {
@@ -15,15 +16,23 @@ class App extends React.Component {
     );
   }
   render() {
-    return <div>
-      <h1>Contact Organizer</h1>
-      <p>Total contacts: {this.props.viewer.contacts.totalCount}</p>
-      <AddContact onSave={this._handleAddContactSave}/>
-      <ContactList
-        contacts={this.props.viewer.contacts}
-        viewer={this.props.viewer}
-      />
-    </div>;
+    return (
+      <div className={styles.app}>
+        <header>
+          <h1>Contact Organizer</h1>
+          <p>Total contacts: {this.props.viewer.contacts.totalCount}</p>
+        </header>
+        <div>
+          <AddContact onSave={this._handleAddContactSave}/>
+        </div>
+        <div>
+          <ContactList
+            contacts={this.props.viewer.contacts}
+            viewer={this.props.viewer}
+          />
+        </div>
+      </div>
+    );
   }
 }
 

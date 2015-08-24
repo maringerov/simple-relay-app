@@ -1,7 +1,7 @@
 import { Router, Route } from 'react-router';
 import BrowserHistory from 'react-router/lib/BrowserHistory';
 import relayNestedRoutes from 'relay-nested-routes';
-import App from './components/App';
+import App from './components/App/App';
 import Contact from './components/Contact/Contact';
 
 const NestedRootContainer = relayNestedRoutes(React, Relay);
