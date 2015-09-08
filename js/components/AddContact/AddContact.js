@@ -50,7 +50,7 @@ export default class AddContact extends React.Component {
     return (
       <div className={styles.main}>
         <h2>Add Contact</h2>
-        <form onSubmit={this._handleSubmit}>
+        <form>
           <input
             type='text'
             placeholder='The name'
@@ -83,9 +83,8 @@ export default class AddContact extends React.Component {
             ref='notes'
           />
           <br />
-          <input type='submit' value='Add Contact' />
         </form>
-
+        <button onClick={this._handleSubmit}>Add Contact</button>
       </div>
     );
   }
